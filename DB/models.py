@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class one_day(models.Model):
     time = models.CharField(max_length=30)
     open = models.FloatField()
@@ -7,6 +8,7 @@ class one_day(models.Model):
     low = models.FloatField()
     close = models.FloatField()
     Volume = models.FloatField()
+
 
 class one_hour(models.Model):
     time = models.CharField(max_length=30)
@@ -25,3 +27,6 @@ class four_hours(models.Model):
     close = models.FloatField()
     Volume = models.FloatField()
 
+
+class result(models.Model):
+    line = models.FloatField()

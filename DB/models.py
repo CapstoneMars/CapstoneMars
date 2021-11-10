@@ -7,7 +7,6 @@ class one_day(models.Model):
     high = models.FloatField()
     low = models.FloatField()
     close = models.FloatField()
-    Volume = models.FloatField()
 
 
 class one_hour(models.Model):
@@ -16,7 +15,6 @@ class one_hour(models.Model):
     high = models.FloatField()
     low = models.FloatField()
     close = models.FloatField()
-    Volume = models.FloatField()
 
 
 class four_hours(models.Model):
@@ -25,8 +23,13 @@ class four_hours(models.Model):
     high = models.FloatField()
     low = models.FloatField()
     close = models.FloatField()
-    Volume = models.FloatField()
 
+class fifteen_min(models.Model):
+    time = models.CharField(max_length=30)
+    open = models.FloatField()
+    high = models.FloatField()
+    low = models.FloatField()
+    close = models.FloatField()
 
 class result(models.Model):
     line = models.FloatField()

@@ -24,6 +24,7 @@ class four_hours(models.Model):
     low = models.FloatField()
     close = models.FloatField()
 
+
 class fifteen_min(models.Model):
     time = models.CharField(max_length=30)
     open = models.FloatField()
@@ -31,5 +32,9 @@ class fifteen_min(models.Model):
     low = models.FloatField()
     close = models.FloatField()
 
+
 class result(models.Model):
-    line = models.FloatField()
+    line = models.IntegerField(max_length=20)
+
+    # from django.contrib.postgres.fields import ArrayField
+    # line = ArrayField(models.IntegerField(max_length=20))

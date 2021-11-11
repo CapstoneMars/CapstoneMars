@@ -53,6 +53,7 @@ class Date_240(viewsets.ModelViewSet):
     queryset = four_hours.objects.all()
 
     def get_queryset(self):
+
         if self.request.method == "GET":
 
             start_date = self.request.query_params.get('start_date')
@@ -65,12 +66,16 @@ class Date_240(viewsets.ModelViewSet):
 
             return result
 
+# ?start_date=2021-10-09T00:00:00Z&end_date=2021-10-09T06:30:00Z
+
+
 class Date_15(viewsets.ModelViewSet):
     serializer_class = apiSerializer_4
     pagination_class = None
     queryset = fifteen_min.objects.all()
 
     def get_queryset(self):
+
         if self.request.method == "GET":
 
             start_date = self.request.query_params.get('start_date')
@@ -83,6 +88,7 @@ class Date_15(viewsets.ModelViewSet):
 
             return result
 
+
 class Lines(viewsets.ModelViewSet):
     serializer_class = resultSerializer
 
@@ -90,6 +96,8 @@ class Lines(viewsets.ModelViewSet):
     # 알고리즘 결과물 json 으로 저장해서 post
 
     def get_queryset(self):
+
         if self.request.method == "GET":
+
             line = result.objects.all()
             return line

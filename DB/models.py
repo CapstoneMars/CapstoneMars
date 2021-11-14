@@ -1,4 +1,5 @@
 from django.db import models
+#from jsonfield import JSONField
 
 
 class one_day(models.Model):
@@ -34,7 +35,8 @@ class fifteen_min(models.Model):
 
 
 class result(models.Model):
-    line = models.IntegerField(max_length=20)
+    line = models.IntegerField()
+    #line = JSONField()
 
     # from django.contrib.postgres.fields import ArrayField
     # line = ArrayField(models.IntegerField(max_length=20))

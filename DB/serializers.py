@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import one_day, one_hour, four_hours, fifteen_min, result
+from .models import one_day, one_hour, four_hours, fifteen_min
 
 
 class apiSerializer_1(serializers.ModelSerializer):
@@ -23,8 +23,3 @@ class apiSerializer_4(serializers.ModelSerializer):
     class Meta:
         model = fifteen_min
         fields = ['time', 'open', 'high', 'low', 'close']
-
-class resultSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = result
-        fields = ['line']

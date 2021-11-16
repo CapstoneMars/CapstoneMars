@@ -1,7 +1,9 @@
+import json
+
 from rest_framework import viewsets
 from rest_framework import generics
-from .models import one_day, one_hour, four_hours, fifteen_min, result
-from .serializers import apiSerializer_1, apiSerializer_2, apiSerializer_3, apiSerializer_4, resultSerializer
+from .models import one_day, one_hour, four_hours, fifteen_min
+from .serializers import apiSerializer_1, apiSerializer_2, apiSerializer_3, apiSerializer_4
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 
@@ -9,6 +11,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse
 
+from LINE.kmeanscluster import Cluster as Cluster
 
 # ?start_date=2017-08-17&end_date=2017-08-20
 class Date_1D(viewsets.ModelViewSet):
@@ -30,6 +33,30 @@ class Date_1D(viewsets.ModelViewSet):
 
             return result
 
+
+class Line_1D(viewsets.ModelViewSet):
+    serializer_class = apiSerializer_1
+    pagination_class = None
+    queryset = one_day.objects.all()
+
+    def get_queryset(self):
+
+        if self.request.method == "GET":
+
+            start_date = self.request.query_params.get('start_date')
+            end_date = self.request.query_params.get('end_date')
+
+            time_filter = self.queryset.filter(time__range=(
+                start_date, end_date))
+
+            result = apiSerializer_1(time_filter, many=True).data
+            kmeans = Cluster()
+            lines = kmeans.returnLines(result)
+
+            json_lines = {"lines": lines}
+            json_lines = json.dumps(json_lines)
+            print(json_lines)
+            return json_lines
 
 class Date_60(viewsets.ModelViewSet):
     serializer_class = apiSerializer_2
@@ -91,20 +118,6 @@ class Date_15(viewsets.ModelViewSet):
             result = apiSerializer_4(time_filter, many=True).data
 
             return result
-
-
-class Lines(viewsets.ModelViewSet):
-    serializer_class = resultSerializer
-
-    # def post(self, request):
-    # 알고리즘 결과물 json 으로 저장해서 post
-
-    def get_queryset(self):
-
-        if self.request.method == "GET":
-
-            line = result.objects.all()
-            return line
 
 
 class chart(View):

@@ -10,9 +10,13 @@ from rest_framework.generics import ListAPIView
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse
+<<<<<<< Updated upstream
 
 from LINE.kmeanscluster import Cluster as Cluster
 
+=======
+import json
+>>>>>>> Stashed changes
 mon = {'01': "Jan",  '02': 'Feb', '03':  'Mar', '04': 'Apr', '05': 'May', '06': 'Jun',
        '07':  'Jul', '08':  'Aug', '09':  'Sep', '10':  'Oct', '11': 'Nov', '12':  'Dec'}
 
@@ -40,14 +44,18 @@ class Date_1D(viewsets.ModelViewSet):
 
         if self.request.method == "GET":
 
+            interval = self.request.query_params.get('chart_interval')
             start_date = self.request.query_params.get('start_date')
             end_date = self.request.query_params.get('end_date')
 
             time_filter = self.queryset.filter(time__range=(
                 start_date, end_date))
-
             result = apiSerializer_1(time_filter, many=True).data
             result = changeTime(result)
+<<<<<<< Updated upstream
+=======
+            print(result)
+>>>>>>> Stashed changes
 
             return result
 
@@ -94,6 +102,10 @@ class Date_60(viewsets.ModelViewSet):
 
             result = apiSerializer_2(time_filter, many=True).data
             result = changeTime(result)
+<<<<<<< Updated upstream
+=======
+            print(result)
+>>>>>>> Stashed changes
 
             return result
 
@@ -115,6 +127,10 @@ class Date_240(viewsets.ModelViewSet):
 
             result = apiSerializer_3(time_filter, many=True).data
             result = changeTime(result)
+<<<<<<< Updated upstream
+=======
+            print(result)
+>>>>>>> Stashed changes
 
             return result
 
@@ -138,6 +154,10 @@ class Date_15(viewsets.ModelViewSet):
 
             result = apiSerializer_4(time_filter, many=True).data
             result = changeTime(result)
+<<<<<<< Updated upstream
+=======
+            print(result)
+>>>>>>> Stashed changes
 
             return result
 
@@ -145,31 +165,3 @@ class Date_15(viewsets.ModelViewSet):
 class chart(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'chartjs/index.html')
-
-
-class newp(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'newp/daeguri.html')
-
-
-def ajax_method(request):
-    # 날짜 인풋 데이터 가져오기
-
-    receive_s = request.GET.get('start_date')
-    receive_e = request.GET.get('end_date')
-    receive_i = request.GET.get('chart_interval')
-
-    receive_i = "Date_60"
-
-    print(receive_s)
-    print(receive_e)
-    print(receive_i)
-    # http://127.0.0.1:8000/DB/date_60/?start_date=2021-08-17&end_date=2021-08-20
-
-    # 지지저항선 값을 모델연결을 해서 욜로 가져옴
-
-    # 임시로 데이터 2개전송
-    # supportLine 누르면 num1부분의 값만 창에 띄워지도록 해놨어용
-    LineData = {'num1': 54000000, 'num2': 56000000, 'stri': receive_i}
-    # 여기로 라인데이터를 보내주시면 됩니다
-    return JsonResponse(LineData)

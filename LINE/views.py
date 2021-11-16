@@ -5,9 +5,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+<<<<<<< Updated upstream
 from kmeanscluster import Cluster as Cluster
 from DB.views import Date_1D as Date_1D
 
+=======
+#from kmeanscluster import Cluster
+>>>>>>> Stashed changes
 import json
 
 '''

@@ -36,6 +36,7 @@ class Date_1D(viewsets.ModelViewSet):
     pagination_class = None
     queryset = one_day.objects.all()
 
+    '''result (차트 데이터)+lines(지지저항선값) json으로 묶어서 보내면 된다'''
     def get_queryset(self):
 
         if self.request.method == "GET":
@@ -47,19 +48,24 @@ class Date_1D(viewsets.ModelViewSet):
             time_filter = self.queryset.filter(time__range=(
                 start_date, end_date))
             result = apiSerializer_1(time_filter, many=True).data
+            json_result = json.dumps(result)
+
+            kmeans = Cluster()
+            lines = kmeans.returnLines(json_result)
+
             result = changeTime(result)
 
-            #kmeans = Cluster()
-            #lines = kmeans.returnLines(result)
-
-            #json_lines = {"lines": lines}
-            #json_lines = json.dumps(json_lines)
-            # print(json_lines)
-
-            print(result)
-
-            return result
-
+            #value = {"result": result, "lines": lines}
+            value = [result, lines]
+            '''
+            value = {
+            "result" = {{ohlc}, {ohlc}, ... ,}
+            "lines" = [...]
+            }
+            return value
+            '''
+            print(value)
+            return value
 
 class Line_1D(viewsets.ModelViewSet):
     serializer_class = apiSerializer_1

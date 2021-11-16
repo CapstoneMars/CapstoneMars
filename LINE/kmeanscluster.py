@@ -32,7 +32,7 @@ class Cluster:
         self.best_k = inertia_arr.index(min(inertia_arr)) + 2
 
     def KMeansCluster(self, data):
-        kmeans = KMeans(n_cluster=self.best_k).fit(data)
+        kmeans = KMeans(n_clusters=self.best_k).fit(data)
         clusters = kmeans.predict(data)
         return clusters
 
@@ -43,9 +43,9 @@ class Cluster:
     def makeLines(self, data):
         for i in range(self.best_k):
             self.lines.append(
-                min(data[cluster == i].min().open, data[cluster == i].min().close))
+                min(data[data.cluster == i].min().open, data[data.cluster == i].min().close))
             self.lines.append(
-                (max(data[cluster == i].max().open, data[cluster == i].max().close)))
+                (max(data[data.cluster == i].max().open, data[data.cluster == i].max().close)))
 
     # 이것만 호출하면 됩니다.
     def returnLines(self, json_data):

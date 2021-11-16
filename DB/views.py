@@ -13,7 +13,24 @@ from django.http import JsonResponse
 
 from LINE.kmeanscluster import Cluster as Cluster
 
+mon = {'01': "Jan",  '02': 'Feb', '03':  'Mar', '04': 'Apr', '05': 'May', '06': 'Jun',
+       '07':  'Jul', '08':  'Aug', '09':  'Sep', '10':  'Oct', '11': 'Nov', '12':  'Dec'}
+
+
+def changeTime(result):
+    for i in range(len(result)):
+        st = result[i]['time']
+        year = st[0:4]
+        b = mon[st[5:7]]
+        c = st[8:10]
+        d = st[11:16]
+        str = c + " " + b + " " + year + " " + d + " Z"
+        result[i]['time'] = str
+    return result
+
 # ?start_date=2017-08-17&end_date=2017-08-20
+
+
 class Date_1D(viewsets.ModelViewSet):
     serializer_class = apiSerializer_1
     pagination_class = None
@@ -30,6 +47,7 @@ class Date_1D(viewsets.ModelViewSet):
                 start_date, end_date))
 
             result = apiSerializer_1(time_filter, many=True).data
+            result = changeTime(result)
 
             return result
 
@@ -58,6 +76,7 @@ class Line_1D(viewsets.ModelViewSet):
             print(json_lines)
             return json_lines
 
+
 class Date_60(viewsets.ModelViewSet):
     serializer_class = apiSerializer_2
     pagination_class = None
@@ -74,6 +93,7 @@ class Date_60(viewsets.ModelViewSet):
                 start_date, end_date))
 
             result = apiSerializer_2(time_filter, many=True).data
+            result = changeTime(result)
 
             return result
 
@@ -94,6 +114,7 @@ class Date_240(viewsets.ModelViewSet):
                 start_date, end_date))
 
             result = apiSerializer_3(time_filter, many=True).data
+            result = changeTime(result)
 
             return result
 
@@ -116,6 +137,7 @@ class Date_15(viewsets.ModelViewSet):
                 start_date, end_date))
 
             result = apiSerializer_4(time_filter, many=True).data
+            result = changeTime(result)
 
             return result
 

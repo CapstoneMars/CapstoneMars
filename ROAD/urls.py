@@ -8,7 +8,5 @@ urlpatterns = [
     path('DB/', include('DB.urls')),
     #path('LINE/', include('LINE.urls')),
     path('', views.chart.as_view()),
-    path('newp/', views.newp.as_view()),
-    path('ajax_method/', views.ajax_method, name='ajax_method'),
-    #path()
+    # path()
 ]

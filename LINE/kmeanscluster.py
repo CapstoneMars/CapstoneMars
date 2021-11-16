@@ -1,4 +1,4 @@
-import numpy as np
+#import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 
@@ -16,7 +16,8 @@ class Cluster:
     def scaledInertia(self, data, k, alpha_k=0.03):
         init = KMeans(n_clusters=1, random_state=0, init='k-means++').fit(data)
         inertia_o = init.inertia_
-        kmeans = KMeans(n_clusters=k, random_state=0, init='k-means++').fit(data)
+        kmeans = KMeans(n_clusters=k, random_state=0,
+                        init='k-means++').fit(data)
         scaled_inertia = (kmeans.inertia_ / inertia_o) + (alpha_k * k)
         return scaled_inertia
 
@@ -35,16 +36,16 @@ class Cluster:
         clusters = kmeans.predict(data)
         return clusters
 
-
     def assignCluster(self, data, cluster):
         data = data.assign(cluster=cluster)
         return data
 
-
     def makeLines(self, data):
         for i in range(self.best_k):
-            self.lines.append(min(data[cluster==i].min().open, data[cluster==i].min().close))
-            self.lines.append((max(data[cluster==i].max().open, data[cluster==i].max().close)))
+            self.lines.append(
+                min(data[cluster == i].min().open, data[cluster == i].min().close))
+            self.lines.append(
+                (max(data[cluster == i].max().open, data[cluster == i].max().close)))
 
     # 이것만 호출하면 됩니다.
     def returnLines(self, json_data):

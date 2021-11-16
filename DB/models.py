@@ -31,13 +31,3 @@ class fifteen_min(models.Model):
     high = models.IntegerField()
     low = models.IntegerField()
     close = models.IntegerField()
-
-<<<<<<< Updated upstream
-=======
-
-class result(models.Model):
-    line = models.IntegerField(max_length=20)
-
-    # from django.contrib.postgres.fields import ArrayField
-    # line = ArrayField(models.IntegerField(max_length=20))
->>>>>>> Stashed changes

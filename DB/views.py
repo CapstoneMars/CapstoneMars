@@ -10,13 +10,9 @@ from rest_framework.generics import ListAPIView
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse
-<<<<<<< Updated upstream
 
 from LINE.kmeanscluster import Cluster as Cluster
 
-=======
-import json
->>>>>>> Stashed changes
 mon = {'01': "Jan",  '02': 'Feb', '03':  'Mar', '04': 'Apr', '05': 'May', '06': 'Jun',
        '07':  'Jul', '08':  'Aug', '09':  'Sep', '10':  'Oct', '11': 'Nov', '12':  'Dec'}
 
@@ -52,10 +48,15 @@ class Date_1D(viewsets.ModelViewSet):
                 start_date, end_date))
             result = apiSerializer_1(time_filter, many=True).data
             result = changeTime(result)
-<<<<<<< Updated upstream
-=======
+
+            #kmeans = Cluster()
+            #lines = kmeans.returnLines(result)
+
+            #json_lines = {"lines": lines}
+            #json_lines = json.dumps(json_lines)
+            # print(json_lines)
+
             print(result)
->>>>>>> Stashed changes
 
             return result
 
@@ -102,10 +103,6 @@ class Date_60(viewsets.ModelViewSet):
 
             result = apiSerializer_2(time_filter, many=True).data
             result = changeTime(result)
-<<<<<<< Updated upstream
-=======
-            print(result)
->>>>>>> Stashed changes
 
             return result
 
@@ -127,10 +124,6 @@ class Date_240(viewsets.ModelViewSet):
 
             result = apiSerializer_3(time_filter, many=True).data
             result = changeTime(result)
-<<<<<<< Updated upstream
-=======
-            print(result)
->>>>>>> Stashed changes
 
             return result
 
@@ -154,10 +147,6 @@ class Date_15(viewsets.ModelViewSet):
 
             result = apiSerializer_4(time_filter, many=True).data
             result = changeTime(result)
-<<<<<<< Updated upstream
-=======
-            print(result)
->>>>>>> Stashed changes
 
             return result
 

@@ -24,12 +24,3 @@ class apiSerializer_4(serializers.ModelSerializer):
     class Meta:
         model = fifteen_min
         fields = ['time', 'open', 'high', 'low', 'close']
-<<<<<<< Updated upstream
-=======
-
-
-class resultSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = result
-        fields = ['line']
->>>>>>> Stashed changes

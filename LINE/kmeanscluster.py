@@ -50,8 +50,7 @@ class Cluster:
     def returnLines(self, json_data):
         oc = self.preprocess(json_data)
         self.chooseK(oc)
-        clusters = self.KMeansCluster(oc, self.best_k)
+        clusters = self.KMeansCluster(oc)
         oc = self.assignCluster(oc, clusters)
-        self.makeLines(oc, self.best_k)
-
+        self.makeLines(oc)
         return self.lines

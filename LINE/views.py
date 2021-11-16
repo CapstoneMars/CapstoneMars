@@ -5,20 +5,27 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-# from ..DB.views import
+from kmeanscluster import Cluster
+import json
+
+'''
+현재 작성한 방식은 data를 request로 받아서 처리하여 lines를 response
+start_date랑 end_date를 request로 받아서 처리하여 lines를 response
+로 보내야 할 듯?
+'''
+
+'''
+front -> start, end -> DB.views(start, end) -> data -> LINE.views(data) -> lines -> front
+'''
 
 
-class call_model(APIView):
-
+class Fit(APIView):
     def get(self, request):
-
         if request.method == 'GET':
-
-            # sentence is the query we want to get the prediction for
-            params = request.GET.get('sentence')
-
-            # predict method used to get the prediction
-            response = LineConfig.predictor.predict(sentence)
-
-            # returning JSON response
-            return JsonResponse(response)
+            kmeans = Cluster()
+            lines = kmeans.returnLines(**request.data)
+            json_lines = {
+                "lines": lines
+            }
+            json_lines = json.dumps(json_lines)
+            return JsonResponse(json_lines, status=200)

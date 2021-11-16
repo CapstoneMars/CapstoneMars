@@ -46,14 +46,12 @@ class Cluster:
             self.lines.append(min(data[cluster==i].min().open, data[cluster==i].min().close))
             self.lines.append((max(data[cluster==i].max().open, data[cluster==i].max().close)))
 
-        return self.lines
-
     # 이것만 호출하면 됩니다.
     def returnLines(self, json_data):
         oc = self.preprocess(json_data)
         self.chooseK(oc)
         clusters = self.KMeansCluster(oc, self.best_k)
         oc = self.assignCluster(oc, clusters)
-        lines = self.makeLines(oc, self.best_k)
+        self.makeLines(oc, self.best_k)
 
-        return lines
+        return self.lines

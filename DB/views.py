@@ -1,5 +1,5 @@
 import json
-
+from collections import OrderedDict
 from rest_framework import viewsets
 from rest_framework import generics
 from .models import one_day, one_hour, four_hours, fifteen_min
@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse
 
-from LINE.kmeanscluster import Cluster as Cluster
+from DB.kmeanscluster import Cluster as Cluster
 
 mon = {'01': "Jan",  '02': 'Feb', '03':  'Mar', '04': 'Apr', '05': 'May', '06': 'Jun',
        '07':  'Jul', '08':  'Aug', '09':  'Sep', '10':  'Oct', '11': 'Nov', '12':  'Dec'}
@@ -36,7 +36,6 @@ class Date_1D(viewsets.ModelViewSet):
     pagination_class = None
     queryset = one_day.objects.all()
 
-    '''result (차트 데이터)+lines(지지저항선값) json으로 묶어서 보내면 된다'''
     def get_queryset(self):
 
         if self.request.method == "GET":
@@ -53,43 +52,25 @@ class Date_1D(viewsets.ModelViewSet):
             kmeans = Cluster()
             lines = kmeans.returnLines(json_result)
 
+            tmp = []
+            dv = len(lines) // 5
+            pe = len(lines) % 5
+            re = lines[-pe:]
+
             result = changeTime(result)
 
-            #value = {"result": result, "lines": lines}
-            value = [result, lines]
-            '''
-            value = {
-            "result" = {{ohlc}, {ohlc}, ... ,}
-            "lines" = [...]
-            }
-            return value
-            '''
-            print(value)
-            return value
+            for i in range(dv):
+                result.append(OrderedDict([('time', lines[i * 5]), ('open', lines[i * 5 + 1]),
+                              ('high', lines[i * 5 + 2]), ('low', lines[i * 5 + 3]), ('close', lines[i * 5 + 4])]))
 
-class Line_1D(viewsets.ModelViewSet):
-    serializer_class = apiSerializer_1
-    pagination_class = None
-    queryset = one_day.objects.all()
+            while True:
+                if len(re) == 5:
+                    break
+                re.append(0)
+            result.append(OrderedDict(
+                [('time', re[0]), ('open', re[1]), ('high', re[2]), ('low', re[3]), ('close', re[4])]))
 
-    def get_queryset(self):
-
-        if self.request.method == "GET":
-
-            start_date = self.request.query_params.get('start_date')
-            end_date = self.request.query_params.get('end_date')
-
-            time_filter = self.queryset.filter(time__range=(
-                start_date, end_date))
-
-            result = apiSerializer_1(time_filter, many=True).data
-            kmeans = Cluster()
-            lines = kmeans.returnLines(result)
-
-            json_lines = {"lines": lines}
-            json_lines = json.dumps(json_lines)
-            print(json_lines)
-            return json_lines
+            return result
 
 
 class Date_60(viewsets.ModelViewSet):
@@ -108,7 +89,28 @@ class Date_60(viewsets.ModelViewSet):
                 start_date, end_date))
 
             result = apiSerializer_2(time_filter, many=True).data
+            json_result = json.dumps(result)
+
+            kmeans = Cluster()
+            lines = kmeans.returnLines(json_result)
+
+            tmp = []
+            dv = len(lines) // 5
+            pe = len(lines) % 5
+            re = lines[-pe:]
+
             result = changeTime(result)
+
+            for i in range(dv):
+                result.append(OrderedDict([('time', lines[i * 5]), ('open', lines[i * 5 + 1]),
+                              ('high', lines[i * 5 + 2]), ('low', lines[i * 5 + 3]), ('close', lines[i * 5 + 4])]))
+
+            while True:
+                if len(re) == 5:
+                    break
+                re.append(0)
+            result.append(OrderedDict(
+                [('time', re[0]), ('open', re[1]), ('high', re[2]), ('low', re[3]), ('close', re[4])]))
 
             return result
 
@@ -129,7 +131,28 @@ class Date_240(viewsets.ModelViewSet):
                 start_date, end_date))
 
             result = apiSerializer_3(time_filter, many=True).data
+            json_result = json.dumps(result)
+
+            kmeans = Cluster()
+            lines = kmeans.returnLines(json_result)
+
+            tmp = []
+            dv = len(lines) // 5
+            pe = len(lines) % 5
+            re = lines[-pe:]
+
             result = changeTime(result)
+
+            for i in range(dv):
+                result.append(OrderedDict([('time', lines[i * 5]), ('open', lines[i * 5 + 1]),
+                              ('high', lines[i * 5 + 2]), ('low', lines[i * 5 + 3]), ('close', lines[i * 5 + 4])]))
+
+            while True:
+                if len(re) == 5:
+                    break
+                re.append(0)
+            result.append(OrderedDict(
+                [('time', re[0]), ('open', re[1]), ('high', re[2]), ('low', re[3]), ('close', re[4])]))
 
             return result
 
@@ -152,7 +175,28 @@ class Date_15(viewsets.ModelViewSet):
                 start_date, end_date))
 
             result = apiSerializer_4(time_filter, many=True).data
+            json_result = json.dumps(result)
+
+            kmeans = Cluster()
+            lines = kmeans.returnLines(json_result)
+
+            tmp = []
+            dv = len(lines) // 5
+            pe = len(lines) % 5
+            re = lines[-pe:]
+
             result = changeTime(result)
+
+            for i in range(dv):
+                result.append(OrderedDict([('time', lines[i * 5]), ('open', lines[i * 5 + 1]),
+                              ('high', lines[i * 5 + 2]), ('low', lines[i * 5 + 3]), ('close', lines[i * 5 + 4])]))
+
+            while True:
+                if len(re) == 5:
+                    break
+                re.append(0)
+            result.append(OrderedDict(
+                [('time', re[0]), ('open', re[1]), ('high', re[2]), ('low', re[3]), ('close', re[4])]))
 
             return result
 

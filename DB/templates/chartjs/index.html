@@ -6,38 +6,36 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/luxon@1.26.0"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.1/dist/chart.js"></script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.1.1/chartjs-plugin-zoom.min.js" integrity="sha512-NxlWEbNbTV6acWnTsWRLIiwzOw0IwHQOYUCKBiu/NqZ+5jSy7gjMbpYI+/4KvaNuZ1qolbw+Vnd76pbIUYEG8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
       {% load static %}
     <script src="{% static "chartjs-chart-financial.js"%}" type="text/javascript"></script>
       <link rel="stylesheet" type="text/css" href="{% static "style.css"%}">
    <body>
    </head>
-      <div class= "chartWrapper">
-         <div style="width:1000px">
-            <canvas id="chart"></canvas>
-         </div>
+      <div style="width:1000px">
+         <canvas id="chart"></canvas>
       </div>
       <label for="start">StartDate : </label>
-      <input type="text" id="start"  maxlength="10" size="10">
+      <input type="date" id="start" >
 
       <label for="end">EndDate : </label>
-      <input type="text" id="end" maxlength="10" size="10">
+      <input type="date"  id="end" >
+      
 
-      <button id="send_d">send data</button>
-      <button id="getCh">getch</button>
-
-      <div>
-         Scale Type:
-         <select id="choice">
+      Chart Interval:
+      <select id="choice">
          <option value="15M" selected>15M</option>
-           <option value="1H" selected>1H</option>
+         <option value="1H" selected>1H</option>
          <option value="4H" selected>4H</option>
          <option value="1D" selected>1D</option>
-            </select>
+      </select>
 
-         <button id="changeChart">changeChart</button>
-      <div>
-      <button id="SupportLine">SupportLine</button>
+      <button class = "button" id="send_d">send data</button>
+
+      <button class = "button" id="SupportLine">SupportLine</button>
       </div>
       </div>
     {% load static %}

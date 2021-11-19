@@ -29,7 +29,7 @@ def changeTime(result):
     return result
 
 
-# ?start_date=2017-08-17&end_date=2017-08-20
+# ?start_date=2021-08-17&end_date=2021-08-20
 class Date_1D(viewsets.ModelViewSet):
     serializer_class = apiSerializer_1
     pagination_class = None

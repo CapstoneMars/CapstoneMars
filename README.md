@@ -2,7 +2,7 @@
 System finds Support and Resistance Level
 
 # Requirements
-pip install -r requirements.txt
+> pip install -r requirements.txt
 
 # How to use
 1. run Django Server
